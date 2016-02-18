@@ -113,7 +113,7 @@ class CPUState {
     // This function is unimplemented. I hard-coded in a value that will make the first of the five test cases pass.
     //
     // When you are done re-implementing this method, all five test cases should pass (and any other test cases
-    // that obey the rules described in comments at the top of DisplayDecoder.swift).
+    // that obey the rules described in comments at the top of DisplayDecoder.swift should also pass).
     //
     // Make use of the enums RegisterASpecialValues and RegisterBSpecialValues so that you don't have to hard
     // code "2" to mean a decimal point (similarly for the other special values).
