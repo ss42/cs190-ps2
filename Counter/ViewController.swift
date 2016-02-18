@@ -64,7 +64,35 @@ class ViewController: UIViewController {
         let key = Key(rawValue: keyCode)!
         switch key {
         case Key.Key0:
-            print("\(__FUNCTION__) is unimplemented for key \(key)")
+            print("0 is pressed")
+            break
+        case Key.Key1:
+            print("1 is pressed")
+            break
+        case Key.Key2:
+            print("2 is pressed")
+            break
+        case Key.Key3:
+            print("3 is pressed")
+            break
+        case Key.Key4:
+            print("4 is pressed")
+            break
+        case Key.Key5:
+            print("5 is pressed")
+            break
+        case Key.Key6:
+            print("6 is pressed")
+            break
+        case Key.Key7:
+            print("7 is pressed")
+            break
+        case Key.Key8:
+            print("8 is pressed")
+            break
+        case Key.Key9:
+            print("9 is pressed")
+            break
         default:
             print("\(__FUNCTION__) is unimplemented for key \(key)")
         }
