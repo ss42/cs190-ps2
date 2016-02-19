@@ -33,7 +33,7 @@ class CPUStateTests: XCTestCase {
         let registerC = cpuState.registers[RegId.C.rawValue]
         let actualC = registerC.asDecimalString()
         
-        XCTAssert(expectedC == actualC)
+        XCTAssert(expectedC == actualC, "Expected register C to be \(expectedC) but got \(actualC)")
     }
     
     // Five examples were given in comments in DisplayDecoder.swift.
