@@ -1,6 +1,6 @@
 //
 //  DisplayDecoder.swift
-//  Counter
+//  Calculator
 //
 //  Created by Brian Hill github.com/brianhill on 2/12/16.
 //
@@ -9,49 +9,24 @@
 //
 // http://home.citycable.ch/pierrefleur/HP-Classic/HP-Classic.html
 //
-//
 // Of course it is one thing to see it and another thing to decipher the implementation choices.
 //
 // We are told by Jacques Laporte how the A and B registers determine what is displayed:
 //
 // http://home.citycable.ch/pierrefleur/Jacques-Laporte/Output%20format.htm
 // 
-// Some examples are given:
-//
-//    The machine has to handle the 4 display format cases:
-//    1) results as 102  to be displayed as “100.”:
-//    (registers on entry in “of13”)
-//    A=01000000000002  B=00029999999999  C=01000000000002
-//
-//    2) results as 10-2 to be displayed as is “.01”
-//
-//    A=00100000000902  B=20099999999999  C=01000000000998
-//
-//    3) results to be displayed in “scientific notation” has 1 1012,
-//
-//    A=01000000000012  B=02999999999000  C=01000000000012
-//
-//    4) results to be displayed in “scientific notation” has 1 10-12,
-//
-//    A=01000000000912  B=02999999999000  C=01000000000988
+// Be careful, there my be errors in his examples. Use the HP-35 emulator link above to get better examples.
 //
 // The A register is set up to hold the display in floating point format and its digits
 // are in proper order while the B register is used as a masking register with digit “9”
 // for each digit position to be blanked, digit”2” for the decimal point position and
 // digit “0” for displayed digit position.
 //
-// Fortunately Laporte also has a page devoted specifically to floating point representation,
+// Laporte also has a page devoted specifically to floating point representation,
 //
 // http://home.citycable.ch/pierrefleur/Jacques-Laporte/Floating%20point.htm
 //
-// and the page has an example with both a negative mantissa and a negative exponent:
-//
-//    The exponent is coded in tens complement notation, so that the number -1.25 x 10^-2 is
-//    represented in normalized form as C=91250000000998.
-//
-//    The machine uses 3 registers to represent a number, register C holds the normalized form,
-//    register A has the displayable form (floating point) A=91250000000902 and register B holds
-//    a mask to correctly position the decimal point: B=02009999999000.
+// and the page has an example with both a negative mantissa and a negative exponent.
 
 // This is a 15-digit display.
 let numberOfSSCs = 15

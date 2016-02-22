@@ -36,46 +36,29 @@ class CPUStateTests: XCTestCase {
         XCTAssert(expectedC == actualC, "Expected register C to be \(expectedC) but got \(actualC)")
     }
     
-    // Five examples were given in comments in DisplayDecoder.swift.
-
-    // 100
-    //    A=01000000000002  B=00029999999999  C=01000000000002
-    //
-    // .01
-    //
-    //    A=00100000000902  B=20099999999999  C=01000000000998
-    //
-    //  1 x 10^12
-    //
-    //    A=01000000000012  B=02999999999000  C=01000000000012
-    //
-    //  1 x 10^-12
-    //
-    //    A=01000000000912  B=02999999999000  C=01000000000988
-    //
-    //  -1.25 x 10^-2
-    //    
-    //    A=91250000000902  B=02009999999000  C=91250000000998
-    //
+    // Five examples (discussed in DisplayDecoder.swift) are tested below:
     
-    // All five examples are tested below:
-    
+    // In this case, the user has entered 100. x 10^2. The canonicalized value is 1 x 10^4.
     func testCanonicalizeSmallPositiveInteger() {
-        self.commonTestCanonicalize("01000000000002", stringB: "00029999999999", expectedC: "01000000000002")
+        self.commonTestCanonicalize("01000000000002", stringB: "00029999999000", expectedC: "01000000000004")
     }
     
+    // In this case, the user hs entered 0.01 x 10^-2. The canonicalized value is 1 x 10^-4.
     func testCanonicalizeSmallDecimalNumber() {
-        self.commonTestCanonicalize("00100000000902", stringB: "20099999999999", expectedC: "01000000000998")
+        self.commonTestCanonicalize("00010000000902", stringB: "02009999999000", expectedC: "01000000000996")
     }
     
+    // In this case, the user hs entered 010.0 x 10^12. The canonicalized value is 1.0 x 10^13.
     func testCanonicalizeLargePositiveInteger() {
-        self.commonTestCanonicalize("01000000000012", stringB: "02999999999000", expectedC: "01000000000012")
+        self.commonTestCanonicalize("00100000000012", stringB: "00020999999000", expectedC: "01000000000013")
     }
     
+    // In this case, the user has entered 1.0 x 10^-12. The canonicalized value is 1.0 x 10^-12.
     func testCanonicalizeTinyDecimalNumber() {
-        self.commonTestCanonicalize("01000000000912", stringB: "02999999999000", expectedC: "01000000000988")
+        self.commonTestCanonicalize("01000000000912", stringB: "02099999999000", expectedC: "01000000000988")
     }
     
+    // In this case, the user has entered -1.25 x 10^-2. The cannoicalized value is -1.25 x 10^-2.
     func testCanonicalizeNegativeDecimalNumber() {
         self.commonTestCanonicalize("91250000000902", stringB: "02009999999000", expectedC: "91250000000998")
     }
