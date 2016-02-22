@@ -8,7 +8,9 @@ Course Home Page: http://physics.stmarys-ca.edu/classes/CS190_S16/index.html.
 
 My St. Mary's Home Page: http://physics.stmarys-ca.edu/lecturers/brianrhill/index.html.
 
-Due: By the beginning of class, Tuesday, February 23rd, 2016.
+Due date slipped due to mistakes in my test cases. REBASE NEW TEST CASES INTO YOUR FORK.
+
+New due date: Before the beginning of class, Thursday, February 25th, 2016.
 
 ## Reading that is Related to this Week's Lectures or this Problem Set
 
