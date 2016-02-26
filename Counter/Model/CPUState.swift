@@ -112,7 +112,109 @@ class CPUState {
     // Make use of the enums RegisterASpecialValues and RegisterBSpecialValues so that you don't have to hard
     // code "2" to mean a decimal point (similarly for the other special values).
     func canonicalize() {
-        let registerC = Register(fromDecimalString: "01000000000002")
+        var registerC = Register(fromDecimalString: "01000000000002")
+        
+        let registerA = registers[RegId.A.rawValue]
+        let registerB = registers[RegId.B.rawValue]
+        
+        //got the 1st digit from A
+        registerC.nibbles[13] = registerA.nibbles[13]
+        
+        
+        var decimalPosition:Nibble = 0 ,  numberOfDigitsAfterDecimalInB:Nibble = 0, zeros:Nibble = 0;
+        var exponentAdjuster:Nibble = 0 , startPosition:Nibble = 0 , decimalAt:Nibble = 0
+        var decimalFound =  false
+        //checking for decimals
+        //also need to check how many digit number it is...
+        
+        for var index = 13; index > 0 ; index--
+        {
+
+            if registerB.nibbles[index] == 2
+            {
+                decimalFound = true
+                decimalAt = Nibble(index)
+                
+            }
+            else if registerB.nibbles[index] == 0 && decimalFound == true
+            {
+                numberOfDigitsAfterDecimalInB++
+
+                
+            }
+            else if registerB.nibbles[index] == 0
+            {
+                decimalPosition++
+
+                
+            }
+            else if registerB.nibbles[index] == 9 && decimalFound == true
+            {
+
+                break
+            }
+        }
+        print("Decimalat \(decimalAt)")
+        print("checkpoint")
+        print(decimalPosition)
+        
+        
+        for var index = 12; index > 2 ; index--
+        {
+            if registerA.nibbles[index] != 0
+            {
+                startPosition = Nibble(index)
+            }
+            else if registerA.nibbles[index] == 0
+            {
+                zeros++
+            }
+        }
+        
+        
+        
+        exponentAdjuster = registerA.nibbles[0] + (registerA.nibbles[1]*10)
+       
+        if startPosition > decimalAt
+        {
+            exponentAdjuster += (startPosition - decimalAt)
+        }
+        else if decimalAt > startPosition
+        {
+            exponentAdjuster += (decimalAt - startPosition)
+        }
+        else
+        {
+            exponentAdjuster = decimalAt
+        }
+
+        if registerA.nibbles[2] == 9
+        {
+            exponentAdjuster = 100 - exponentAdjuster
+            registerC.nibbles[2] = 9
+        }
+        
+       // registerC.nibbles[2] = 0
+        registerC.nibbles[0] = exponentAdjuster % 10
+        registerC.nibbles[1] = exponentAdjuster/10
+        var temp:Nibble = 0
+        
+        for var i:Nibble  = 12 ; i < 2  ; i--
+        {
+
+            if (registerA.nibbles[Int(i)] == 0)
+            {
+                temp++
+            }
+            else
+            {
+
+                registerC.nibbles[Int(i)] = registerA.nibbles[Int(i)]
+            }
+        }
+        
+     
+
         registers[RegId.C.rawValue] = registerC
     }
     
